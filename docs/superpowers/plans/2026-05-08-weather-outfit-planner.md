@@ -1,6 +1,6 @@
 # Weather Outfit Planner Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Completed implementation record:** This was the initial plan used to build version `0.1.0`. Do not re-run the snippets below as an implementation script without first reconciling them with the current source, tests, and README.
 
 **Goal:** Build a Korean classroom drag-and-drop outfit planning game where grade 1-2 students choose weather-appropriate clothes and supplies for a cute character, then receive immediate feedback.
 
