@@ -18,6 +18,11 @@ test('student can complete rainy outfit mission', async ({ page }) => {
   await expect(page.locator('[data-testid="character-layer-umbrella"]')).toBeVisible()
   await expect(page.locator('[data-testid="character-layer-rain-boots"]')).toBeVisible()
   await expect(page.locator('[data-testid="character-layer-windbreaker"]')).toBeVisible()
+  await page.getByRole('button', { name: umbrellaButton }).click()
+  await expect(page.locator('[data-testid="character-layer-umbrella"]')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: /우산 빼기/ })).toHaveCount(0)
+  await page.getByRole('button', { name: umbrellaButton }).click()
+  await expect(page.locator('[data-testid="character-layer-umbrella"]')).toBeVisible()
   await page.getByRole('button', { name: /^.*외출하기$/ }).click()
 
   await expect(page.getByRole('dialog')).toContainText('완벽한 외출 준비 끝!')

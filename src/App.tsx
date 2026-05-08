@@ -30,14 +30,14 @@ function App() {
       return;
     }
 
+    setScore(null);
     setWornItemIds((prevIds) => {
       if (prevIds.includes(itemId)) {
-        setStatusMessage("이미 챙긴 물건이에요.");
-        return prevIds;
+        setStatusMessage(`${newItem.label} 해제 완료.`);
+        return prevIds.filter((existingId) => existingId !== itemId);
       }
 
       setStatusMessage(`${newItem.label} 챙기기 완료!`);
-      setScore(null);
       return [...prevIds, itemId];
     });
   };

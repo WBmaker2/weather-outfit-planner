@@ -73,11 +73,13 @@ describe("weather outfit planner", () => {
     expect(screen.getByTestId("character-layer-rain-boots")).toBeInTheDocument();
     expect(screen.getByTestId("character-layer-windbreaker")).toBeInTheDocument();
 
-    await user.click(getWornItemRemoveButton("우산")[0]);
+    await user.click(getWardrobeButtonByLabel("우산"));
 
     expect(screen.queryByTestId("character-layer-umbrella")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /우산 빼기/ })).not.toBeInTheDocument();
     expect(screen.getByTestId("character-layer-rain-boots")).toBeInTheDocument();
     expect(screen.getByTestId("character-layer-windbreaker")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("우산 해제 완료.");
   });
 
   it("passes rainy mission when umbrella, boots, and windbreaker are selected", async () => {
@@ -200,14 +202,19 @@ describe("weather outfit planner", () => {
     ).toBeInTheDocument();
   });
 
-  it("does not duplicate worn chips when the same wardrobe item is clicked twice", async () => {
+  it("toggles an item off when the same wardrobe button is clicked twice", async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(getWardrobeButtonByLabel("우산"));
+    expect(getWornItemRemoveButton("우산")).toHaveLength(1);
+    expect(screen.getByTestId("character-layer-umbrella")).toBeInTheDocument();
+
     await user.click(getWardrobeButtonByLabel("우산"));
 
-    const wornUmbrellas = getWornItemRemoveButton("우산");
-    expect(wornUmbrellas).toHaveLength(1);
+    expect(screen.queryByRole("button", { name: /우산 빼기/ })).not.toBeInTheDocument();
+    expect(screen.queryByTestId("character-layer-umbrella")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "우산" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("status")).toHaveTextContent("우산 해제 완료.");
   });
 });
