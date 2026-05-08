@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "vitest run --passWithNoTests src",
+    "test": "vitest run src",
     "test:watch": "vitest",
-    "test:e2e": "playwright test --pass-with-no-tests"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "react": "^18.3.1",

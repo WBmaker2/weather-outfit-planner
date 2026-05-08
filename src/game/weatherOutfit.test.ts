@@ -20,9 +20,8 @@ describe('scoreOutfit', () => {
 
     expect(result.passed).toBe(false)
     expect(result.missingItemIds).toEqual(['rain-boots', 'windbreaker'])
-    expect(result.message).toBe('장화, 바람막이도 챙겨요.')
-    expect(result.message).not.toContain('을/를')
-    expect(result.message).not.toContain('은/는')
+    expect(result.message).toContain('장화는 발이 젖지 않아요.')
+    expect(result.message).toContain('바람막이는 찬 바람을 막아요.')
   })
 
   it('reports unsuitable items for hot sunny weather', () => {
@@ -53,11 +52,10 @@ describe('scoreOutfit', () => {
     const result = scoreOutfit(mission!, ['sandals', 'short-sleeve'])
 
     expect(result.passed).toBe(false)
-    expect(result.message).toBe(
-      '우산, 장화, 바람막이도 챙겨요. 샌들, 반팔은 오늘 날씨와 맞지 않아요.',
-    )
-    expect(result.message).not.toContain('을/를')
-    expect(result.message).not.toContain('은/는')
+    expect(result.message).toContain('우산은 비를 피할 수 있어요.')
+    expect(result.message).toContain('장화는 발이 젖지 않아요.')
+    expect(result.message).toContain('바람막이는 찬 바람을 막아요.')
+    expect(result.message).toContain('샌들, 반팔은 오늘 날씨와 맞지 않아요.')
   })
 })
 

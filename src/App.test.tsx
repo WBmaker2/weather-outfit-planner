@@ -42,6 +42,29 @@ describe("weather outfit planner", () => {
     expect(document.activeElement).toBe(confirmButton);
   });
 
+  it("keeps focus inside dialog and restores it when pressing Escape", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(getWardrobeButtonByLabel("우산"));
+    await user.click(getWardrobeButtonByLabel("장화"));
+    await user.click(getWardrobeButtonByLabel("바람막이"));
+
+    const checkButton = screen.getByRole("button", { name: "외출하기" });
+    checkButton.focus();
+
+    await user.click(checkButton);
+    const confirmButton = await screen.findByRole("button", { name: "확인" });
+    expect(document.activeElement).toBe(confirmButton);
+
+    await user.keyboard("{Tab}");
+    expect(document.activeElement).toBe(confirmButton);
+
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(document.activeElement).toBe(checkButton);
+  });
+
   it("guides missing required items for rainy mission when incomplete", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -51,7 +74,26 @@ describe("weather outfit planner", () => {
 
     const dialog = await screen.findByRole("dialog", { name: "다시 챙겨 볼까요?" });
     expect(dialog).toBeInTheDocument();
-    expect(within(dialog).getByText(/장화, 바람막이도 챙겨요\./)).toBeInTheDocument();
+    expect(within(dialog).getByText(/장화는 발이 젖지 않아요\./)).toBeInTheDocument();
+    expect(within(dialog).getByText(/바람막이는 찬 바람을 막아요\./)).toBeInTheDocument();
+  });
+
+  it("uses safe Korean wording in wearable status messages", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(getWardrobeButtonByLabel("우산"));
+    expect(screen.getByRole("status")).toHaveTextContent("우산 챙기기 완료!");
+    expect(screen.getByRole("status")).not.toHaveTextContent("우산를");
+
+    const wornUmbrellaButton = getWornItemRemoveButton("우산");
+    await user.click(wornUmbrellaButton[0]);
+    expect(screen.getByRole("status")).toHaveTextContent("우산 다시 빼기 완료.");
+    expect(screen.getByRole("status")).not.toHaveTextContent("우산를");
+
+    await user.click(getWardrobeButtonByLabel("장갑"));
+    expect(screen.getByRole("status")).toHaveTextContent("장갑 챙기기 완료!");
+    expect(screen.getByRole("status")).not.toHaveTextContent("장갑를");
   });
 
   it("resets worn items when mission changes to sunny-hot", async () => {

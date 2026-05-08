@@ -35,7 +35,7 @@ function App() {
         return prevIds;
       }
 
-      setStatusMessage(`${newItem.label}를 챙겼어요!`);
+      setStatusMessage(`${newItem.label} 챙기기 완료!`);
       setScore(null);
       return [...prevIds, itemId];
     });
@@ -48,7 +48,7 @@ function App() {
     }
 
     setWornItemIds((prevIds) => prevIds.filter((existingId) => existingId !== itemId));
-    setStatusMessage(`${item.label}를 뺐어요.`);
+    setStatusMessage(`${item.label} 다시 빼기 완료.`);
     setScore(null);
   };
 

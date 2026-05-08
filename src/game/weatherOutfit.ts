@@ -114,7 +114,25 @@ export function scoreOutfit(mission: WeatherMission, selectedItemIds: string[]):
   const messagePieces: string[] = []
 
   if (missingItemIds.length > 0) {
-    messagePieces.push(`${missingItemIds.map(getItemLabel).join(', ')}도 챙겨요.`)
+    const missingGuidanceMap: Record<string, string> = {
+      umbrella: '우산은 비를 피할 수 있어요.',
+      'rain-boots': '장화는 발이 젖지 않아요.',
+      windbreaker: '바람막이는 찬 바람을 막아요.',
+      'short-sleeve': '반팔은 더운 날 덜 덥고 편하게 있어요.',
+      cap: '모자는 햇볕이 강할 때 눈을 가려줘요.',
+      'water-bottle': '물병은 목마를 때 바로 마실 수 있어요.',
+      'padded-coat': '패딩은 추위를 막고 몸을 따뜻하게 해줘요.',
+      scarf: '목도리는 목이 차가워지는 걸 막아줘요.',
+      gloves: '장갑은 손이 차가워질 때 따뜻하게 지켜줘요.',
+      'light-jacket': '얇은 겉옷은 봄바람을 부드럽게 막아줘요.',
+      mask: '마스크는 먼지를 덜 마셔요.',
+    }
+
+    messagePieces.push(
+      missingItemIds
+        .map((itemId) => missingGuidanceMap[itemId] ?? `${getItemLabel(itemId)}도 챙겨요.`)
+        .join(' '),
+    )
   }
 
   if (unsuitableItemIds.length > 0) {
