@@ -11,26 +11,488 @@ body {
 }
 
 body {
-  font-family: "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
-  background: #f5f7fa;
-  color: #1f2937;
+  font-family:
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Pretendard",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    system-ui,
+    sans-serif;
+  color: #1f2f3f;
+  background:
+    linear-gradient(180deg, #dff5ff 0%, #fff0d9 45%, #e6f7e2 100%);
 }
 
 .app-shell {
+  width: min(1120px, calc(100vw - 2rem));
+  margin: 0 auto;
   min-height: 100vh;
   display: grid;
-  place-items: center;
-  gap: 0.5rem;
-  text-align: center;
-  padding: 1rem;
+  gap: 1rem;
+  align-content: start;
+  justify-items: stretch;
+  padding: 1.25rem 0 2rem;
+  text-align: left;
 }
 
 .app-shell h1 {
   margin: 0;
-  font-size: 1.75rem;
+  color: #0f3f5f;
+  font-size: 2rem;
+  line-height: 1.2;
 }
 
 .app-shell p {
   margin: 0;
-  color: #4b5563;
+  color: #3b4b5f;
+}
+
+.mission-panel,
+.character-stage,
+.wardrobe-panel,
+.action-bar,
+.feedback-dialog {
+  background: #ffffff;
+  border: 1px solid #d9e2ef;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgb(23 72 102 / 8%);
+}
+
+.mission-panel {
+  padding: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.mission-weather {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.weather-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #e6f3ff;
+  border: 1px solid #b8d9f3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+}
+
+.mission-subtitle {
+  margin: 0;
+  color: #44607d;
+  font-size: 0.96rem;
+}
+
+.mission-title {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #083d63;
+}
+
+.mission-description {
+  margin: 0;
+  color: #2f4255;
+  background: #f7fbff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid #d6e5f7;
+  line-height: 1.55;
+}
+
+.mission-select-label {
+  margin-top: 0.25rem;
+  font-weight: 700;
+  color: #0d3c61;
+}
+
+.mission-panel select {
+  appearance: none;
+  border-radius: 8px;
+  border: 1px solid #a8c4e2;
+  background: #f7fbff;
+  color: #1f2f3f;
+  padding: 0.72rem 2.5rem 0.72rem 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 420px;
+  background-image: linear-gradient(45deg, transparent 50%, #2f6f9d 50%),
+    linear-gradient(135deg, #2f6f9d 50%, transparent 50%),
+    linear-gradient(to right, #2f6f9d, #2f6f9d);
+  background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 12px) 50%,
+    calc(100% - 2.4rem) 50%;
+  background-size:
+    6px 6px,
+    6px 6px,
+    1px 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.mission-panel select:focus-visible,
+.mission-panel select:hover {
+  outline: none;
+  border-color: #2e6da2;
+  background-color: #eef6ff;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.character-stage {
+  min-height: 320px;
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.character-area {
+  min-height: 170px;
+  border: 2px dashed #8db5d7;
+  border-radius: 8px;
+  background: #f1f7ff;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 0.75rem;
+  gap: 0.4rem;
+}
+
+.character-avatar {
+  margin: 0;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: #ffe39f;
+  border: 2px solid #f5bc34;
+  box-shadow: 0 5px 12px rgb(245 188 52 / 35%);
+}
+
+.character-hint {
+  margin: 0;
+  text-align: center;
+  color: #32516c;
+  font-size: 0.95rem;
+}
+
+.stage-items {
+  min-height: 98px;
+  border: 1px solid #d7e4f3;
+  border-radius: 8px;
+  background: #fafcff;
+  padding: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.empty-prompt {
+  margin: 0;
+  color: #526a81;
+  width: 100%;
+  font-weight: 500;
+}
+
+.worn-item-chip {
+  border-radius: 999px;
+  border: 1px solid #b6d2eb;
+  background: #eaf5ff;
+  color: #124067;
+  padding: 0.52rem 0.78rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  cursor: pointer;
+  border-bottom: 3px solid #9bc2e4;
+}
+
+.worn-item-chip:hover,
+.worn-item-chip:focus-visible {
+  background: #d8ebff;
+  border-color: #79a8d9;
+  outline: none;
+}
+
+.worn-item-chip:focus-visible {
+  box-shadow: 0 0 0 3px rgb(56 124 191 / 25%);
+}
+
+.wardrobe-panel {
+  min-height: 320px;
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.wardrobe-panel h2 {
+  margin: 0;
+  color: #0e3f63;
+  font-size: 1.2rem;
+}
+
+.wardrobe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.65rem;
+}
+
+.wardrobe-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.65rem;
+  border: 1px solid #b7d0e8;
+  border-radius: 8px;
+  min-height: 3.25rem;
+  padding: 0.6rem 0.75rem;
+  background: #ffffff;
+  color: #1e3045;
+  cursor: pointer;
+  text-align: left;
+}
+
+.wardrobe-item:hover,
+.wardrobe-item:focus-visible {
+  background: #eff6ff;
+  border-color: #75a9de;
+  outline: none;
+}
+
+.wardrobe-item:focus-visible {
+  box-shadow: 0 0 0 3px rgb(56 124 191 / 22%);
+}
+
+.wardrobe-item[aria-pressed='true'] {
+  background: #f0f9ff;
+  border-color: #428fd0;
+  border-bottom-color: #2d77bc;
+}
+
+.wardrobe-item[aria-pressed='true'] .wardrobe-item-icon {
+  transform: rotate(-2deg) scale(1.06);
+}
+
+.wardrobe-item:active {
+  transform: translateY(1px);
+}
+
+.wardrobe-item-icon {
+  width: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.action-bar {
+  padding: 0.85rem 1rem;
+  display: grid;
+  gap: 0.75rem;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+}
+
+.action-bar [role='status'] {
+  margin: 0;
+  color: #1f435f;
+  min-height: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.action-bar button {
+  border: 0;
+  border-radius: 8px;
+  background: #2f79b4;
+  color: #ffffff;
+  min-height: 2.6rem;
+  padding: 0 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.action-bar button:hover,
+.action-bar button:focus-visible {
+  background: #23679e;
+  outline: none;
+}
+
+.action-bar button:focus-visible {
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 70%), 0 0 0 6px rgb(47 121 180 / 28%);
+}
+
+.feedback-dialog {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(540px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 1.4rem 1.5rem 1.5rem;
+  display: grid;
+  gap: 0.85rem;
+  background: #ffffff;
+  border: 1px solid #d9e2ef;
+  border-radius: 8px;
+  box-shadow: 0 16px 35px rgb(11 35 57 / 24%);
+  text-align: center;
+  z-index: 50;
+  overflow: auto;
+}
+
+.feedback-dialog::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgb(11 30 50 / 45%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.feedback-dialog > * {
+  position: relative;
+  z-index: 1;
+  width: min(480px, 100%);
+  margin: 0;
+}
+
+.feedback-dialog h3 {
+  color: #0c3e63;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+
+.feedback-dialog p {
+  color: #29455d;
+  line-height: 1.5;
+}
+
+.feedback-dialog button {
+  justify-self: center;
+  border: 0;
+  border-radius: 8px;
+  background: #2f79b4;
+  color: #ffffff;
+  height: 2.65rem;
+  padding: 0 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.feedback-dialog button:hover,
+.feedback-dialog button:focus-visible {
+  background: #246495;
+  outline: none;
+}
+
+.feedback-dialog button:focus-visible {
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 72%), 0 0 0 6px rgb(47 121 180 / 28%);
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    width: calc(100vw - 1.4rem);
+    padding-top: 1rem;
+    gap: 0.85rem;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .wardrobe-grid {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  }
+
+  .character-stage {
+    min-height: 280px;
+  }
+
+  .action-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .action-bar button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    width: calc(100vw - 0.9rem);
+    padding: 0.85rem 0 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .app-shell h1 {
+    font-size: 1.55rem;
+  }
+
+  .mission-panel,
+  .character-stage,
+  .wardrobe-panel,
+  .action-bar,
+  .feedback-dialog > * {
+    border-radius: 8px;
+  }
+
+  .mission-description {
+    padding: 0.7rem;
+  }
+
+  .weather-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.45rem;
+  }
+
+  .mission-title {
+    font-size: 1.18rem;
+    line-height: 1.35;
+  }
+
+  .character-area {
+    min-height: 150px;
+  }
+
+  .wardrobe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wardrobe-item {
+    min-height: 3rem;
+  }
+
+  .feedback-dialog {
+    inset: auto auto 1rem 50%;
+    transform: translateX(-50%);
+    width: min(540px, calc(100vw - 0.9rem));
+    max-height: calc(100dvh - 1rem);
+    padding: 1.1rem 1rem 1.2rem;
+    text-align: center;
+  }
+
+  .feedback-dialog > h3,
+  .feedback-dialog > p,
+  .feedback-dialog > button {
+    width: 100%;
+  }
+
+  .feedback-dialog {
+    border-radius: 8px;
+  }
 }
