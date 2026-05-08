@@ -226,36 +226,38 @@ body {
 }
 
 .character-stage {
-  min-height: 320px;
+  min-height: 430px;
   padding: 1rem;
   display: grid;
   gap: 0.9rem;
 }
 
 .character-area {
-  min-height: 170px;
+  min-height: 292px;
   border: 2px dashed #8db5d7;
   border-radius: 8px;
-  background: #f1f7ff;
+  background:
+    radial-gradient(circle at 50% 76%, #d6edff 0 18%, transparent 19%),
+    linear-gradient(180deg, #f1f8ff 0%, #fff9ec 100%);
   display: grid;
   align-content: center;
   justify-items: center;
   padding: 0.75rem;
-  gap: 0.4rem;
+  gap: 0.25rem;
+  overflow: hidden;
 }
 
-.character-avatar {
-  margin: 0;
-  width: 86px;
-  height: 86px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  background: #ffe39f;
-  border: 2px solid #f5bc34;
-  box-shadow: 0 5px 12px rgb(245 188 52 / 35%);
+.character-svg {
+  width: min(310px, 100%);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 18px rgb(45 84 113 / 16%));
+}
+
+.character-svg path,
+.character-svg circle,
+.character-svg ellipse {
+  vector-effect: non-scaling-stroke;
 }
 
 .character-hint {
@@ -263,6 +265,247 @@ body {
   text-align: center;
   color: #32516c;
   font-size: 0.95rem;
+}
+
+.avatar-shadow {
+  fill: rgb(58 99 132 / 14%);
+}
+
+.avatar-neck,
+.avatar-head,
+.avatar-ear,
+.avatar-leg,
+.avatar-hand {
+  fill: #ffd99c;
+  stroke: #d69a52;
+  stroke-width: 3;
+}
+
+.avatar-hair {
+  fill: #4d3429;
+}
+
+.avatar-eye {
+  fill: #233a53;
+}
+
+.avatar-smile {
+  fill: none;
+  stroke: #233a53;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.avatar-arm {
+  fill: none;
+  stroke: #ffd99c;
+  stroke-width: 22;
+  stroke-linecap: round;
+}
+
+.avatar-arm-left,
+.avatar-arm-right {
+  filter: drop-shadow(0 2px 0 rgb(166 116 70 / 24%));
+}
+
+.avatar-shirt {
+  fill: #78c7f2;
+  stroke: #2f79b4;
+  stroke-width: 3;
+}
+
+.avatar-shorts {
+  fill: #667eea;
+  stroke: #4155b6;
+  stroke-width: 3;
+}
+
+.avatar-shoe {
+  fill: #334155;
+}
+
+.character-layer {
+  animation: outfit-pop 180ms ease-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.shirt-short,
+.shirt-short-body {
+  fill: #fb7185;
+  stroke: #be3e58;
+  stroke-width: 3;
+}
+
+.shirt-short-body {
+  fill: #fda4af;
+}
+
+.jacket-light {
+  fill: #86efac;
+  stroke: #2f855a;
+  stroke-width: 4;
+}
+
+.jacket-zip {
+  fill: none;
+  stroke: #f7fff9;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.windbreaker {
+  fill: #38bdf8;
+  stroke: #0f6e98;
+  stroke-width: 4;
+}
+
+.windbreaker-panel {
+  fill: #bae6fd;
+  stroke: #0f6e98;
+  stroke-width: 3;
+}
+
+.windbreaker-zip {
+  fill: none;
+  stroke: #0f6e98;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.padded-coat {
+  fill: #f59e0b;
+  stroke: #a15c07;
+  stroke-width: 4;
+}
+
+.padded-band,
+.padded-zip {
+  fill: none;
+  stroke: #ffe6a9;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.rain-boot {
+  fill: #22c55e;
+  stroke: #13763a;
+  stroke-width: 4;
+}
+
+.boot-stripe {
+  fill: none;
+  stroke: #dcfce7;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.sandal-sole,
+.sandal-strap {
+  fill: none;
+  stroke: #d97706;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.sandal-strap {
+  stroke-width: 5;
+}
+
+.scarf-wrap,
+.scarf-tail {
+  fill: #ef4444;
+  stroke: #991b1b;
+  stroke-width: 3;
+}
+
+.glove {
+  fill: #6366f1;
+  stroke: #36369f;
+  stroke-width: 3;
+}
+
+.face-mask {
+  fill: #eff6ff;
+  stroke: #6b93b7;
+  stroke-width: 3;
+}
+
+.mask-line {
+  fill: none;
+  stroke: #9bb7ce;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.cap-crown {
+  fill: #facc15;
+  stroke: #b77900;
+  stroke-width: 4;
+}
+
+.cap-brim {
+  fill: #f59e0b;
+  stroke: #b77900;
+  stroke-width: 4;
+}
+
+.water-bottle {
+  fill: #bfdbfe;
+  stroke: #2f79b4;
+  stroke-width: 4;
+}
+
+.water-cap {
+  fill: #3b82f6;
+  stroke: #1d4ed8;
+  stroke-width: 3;
+}
+
+.water-label {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.water-spark {
+  fill: #7dd3fc;
+  stroke: #0891b2;
+  stroke-width: 2;
+}
+
+.umbrella-stick,
+.umbrella-rib {
+  fill: none;
+  stroke: #5d4037;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.umbrella-top {
+  fill: #60a5fa;
+  stroke: #1d4ed8;
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.umbrella-rib {
+  stroke: #dbeafe;
+  stroke-width: 3;
+}
+
+@keyframes outfit-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .stage-items {
@@ -519,7 +762,7 @@ body {
   }
 
   .character-stage {
-    min-height: 280px;
+    min-height: 410px;
   }
 
   .action-bar {
@@ -575,7 +818,7 @@ body {
   }
 
   .character-area {
-    min-height: 150px;
+    min-height: 260px;
   }
 
   .wardrobe-grid {
@@ -607,5 +850,11 @@ body {
   .dialog-backdrop {
     align-items: end;
     padding-bottom: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character-layer {
+    animation: none;
   }
 }

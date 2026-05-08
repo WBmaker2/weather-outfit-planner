@@ -19,6 +19,9 @@ describe("weather outfit planner", () => {
         name: /오늘의 날씨: 비 오고 바람이 불어요/,
       }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", { name: "옷차림이 바뀌는 초등학생 캐릭터" }),
+    ).toBeInTheDocument();
     expect(getWardrobeButtonByLabel("우산")).toBeInTheDocument();
     expect(getWardrobeButtonByLabel("장화")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "외출하기" })).toBeInTheDocument();
@@ -52,6 +55,29 @@ describe("weather outfit planner", () => {
       "true",
     );
     expect(screen.getByRole("status")).toHaveTextContent("수업 모드가 켜졌어요.");
+  });
+
+  it("updates the character outfit layers as items are selected and removed", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    expect(screen.queryByTestId("character-layer-umbrella")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("character-layer-rain-boots")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("character-layer-windbreaker")).not.toBeInTheDocument();
+
+    await user.click(getWardrobeButtonByLabel("우산"));
+    await user.click(getWardrobeButtonByLabel("장화"));
+    await user.click(getWardrobeButtonByLabel("바람막이"));
+
+    expect(screen.getByTestId("character-layer-umbrella")).toBeInTheDocument();
+    expect(screen.getByTestId("character-layer-rain-boots")).toBeInTheDocument();
+    expect(screen.getByTestId("character-layer-windbreaker")).toBeInTheDocument();
+
+    await user.click(getWornItemRemoveButton("우산")[0]);
+
+    expect(screen.queryByTestId("character-layer-umbrella")).not.toBeInTheDocument();
+    expect(screen.getByTestId("character-layer-rain-boots")).toBeInTheDocument();
+    expect(screen.getByTestId("character-layer-windbreaker")).toBeInTheDocument();
   });
 
   it("passes rainy mission when umbrella, boots, and windbreaker are selected", async () => {
