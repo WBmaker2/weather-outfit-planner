@@ -18,6 +18,11 @@ npm install
 npm run dev
 ```
 
+## 배포
+
+- GitHub Pages: `https://wbmaker2.github.io/weather-outfit-planner/`
+- `main` 브랜치에 push하면 GitHub Actions가 테스트와 빌드를 거쳐 Pages에 배포합니다.
+
 ## 검증
 
 ```bash
