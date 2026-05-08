@@ -13,9 +13,21 @@
 ## Current Workspace Notes
 
 - Workspace: `/Users/kimhongnyeon/Dev/codex/weather-outfit-planner`
-- Current state: empty directory, not a git repository.
+- Current state: implementation completed. This plan is preserved as the initial execution plan and should not be used as the live source of truth for reimplementation.
+- Final source of truth after execution: current committed source files, tests, and `README.md`.
+- Post-review fixes changed several details from this original plan: modal overlay/focus behavior, item-specific reason feedback, natural Korean status messages, e2e current-source verification, and favicon/browser QA hygiene.
 - User-facing language: Korean 존대말 is not needed inside student UI; student UI should use friendly Korean classroom copy.
 - If subagents are used later, AGENTS.md instruction applies: worker subagents should use `GPT-5.3-Codex-Spark` when available; orchestrator and review stay on the main model.
+
+## Completion Addendum
+
+This document records the implementation plan used to build version `0.1.0`. It is not a patch script. Later review fixes intentionally supersede snippets below where they differ from the repository:
+
+- Scoring feedback now explains why missing items matter instead of only listing labels.
+- Student-facing status messages avoid placeholder particles and fixed object particles.
+- Feedback is rendered inside a real blocking overlay with focus management.
+- `npm test` and `npm run test:e2e` no longer pass when tests are missing.
+- Playwright rebuilds before preview and does not reuse an already-running preview server.
 
 ## Product Scope
 
