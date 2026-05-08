@@ -9,6 +9,8 @@ export type WeatherMission = {
   id: string
   title: string
   description: string
+  lessonRule: string
+  teacherPrompt: string
   weatherIcon: string
   requiredItemIds: string[]
   unsuitableItemIds: string[]
@@ -41,6 +43,8 @@ export const missions: WeatherMission[] = [
     id: 'rain-wind',
     title: '오늘의 날씨: 비 오고 바람이 불어요',
     description: '젖지 않고, 찬 바람도 막을 준비가 필요해요.',
+    lessonRule: '비 오는 날에는 발과 몸이 젖지 않도록 우산, 장화, 바람막이를 챙겨요.',
+    teacherPrompt: '비와 바람이 함께 있으면 어떤 준비가 더 필요할까요?',
     weatherIcon: '🌧️',
     requiredItemIds: ['umbrella', 'rain-boots', 'windbreaker'],
     unsuitableItemIds: ['sandals', 'short-sleeve'],
@@ -49,6 +53,8 @@ export const missions: WeatherMission[] = [
     id: 'sunny-hot',
     title: '오늘의 날씨: 햇볕이 강하고 더워요',
     description: '시원하게 입고, 햇볕과 갈증을 조심해요.',
+    lessonRule: '햇볕이 강한 날에는 모자로 눈을 보호하고 물병으로 수분을 챙겨요.',
+    teacherPrompt: '더운 날 오래 밖에 있으면 우리 몸에 어떤 변화가 생길까요?',
     weatherIcon: '☀️',
     requiredItemIds: ['cap', 'short-sleeve', 'water-bottle'],
     unsuitableItemIds: ['padded-coat', 'scarf', 'gloves'],
@@ -57,6 +63,8 @@ export const missions: WeatherMission[] = [
     id: 'snow-cold',
     title: '오늘의 날씨: 눈 오고 추워요',
     description: '몸을 따뜻하게 지키고, 손과 목도 챙겨요.',
+    lessonRule: '눈 오고 추운 날에는 몸, 목, 손을 따뜻하게 감싸요.',
+    teacherPrompt: '추운 날 우리 몸을 따뜻하게 지키는 방법을 말해볼까요?',
     weatherIcon: '❄️',
     requiredItemIds: ['padded-coat', 'scarf', 'gloves'],
     unsuitableItemIds: ['sandals', 'short-sleeve'],
@@ -65,6 +73,8 @@ export const missions: WeatherMission[] = [
     id: 'spring-dust',
     title: '오늘의 날씨: 봄바람과 먼지가 있어요',
     description: '얇은 겉옷과 마스크로 건강하게 나가요.',
+    lessonRule: '봄바람과 먼지가 있는 날에는 얇은 겉옷과 마스크로 몸을 지켜요.',
+    teacherPrompt: '먼지가 많은 날 숨쉬기와 옷차림은 어떻게 준비하면 좋을까요?',
     weatherIcon: '🌬️',
     requiredItemIds: ['light-jacket', 'mask'],
     unsuitableItemIds: ['padded-coat'],

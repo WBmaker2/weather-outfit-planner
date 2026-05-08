@@ -24,6 +24,36 @@ describe("weather outfit planner", () => {
     expect(screen.getByRole("button", { name: "외출하기" })).toBeInTheDocument();
   });
 
+  it("expands the 생활 수칙 and teacher prompt for the active mission", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByText("생활 수칙 보기"));
+
+    expect(
+      screen.getByText("비 오는 날에는 발과 몸이 젖지 않도록 우산, 장화, 바람막이를 챙겨요."),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("교사 질문: 비와 바람이 함께 있으면 어떤 준비가 더 필요할까요?"),
+    ).toBeInTheDocument();
+  });
+
+  it("toggles classroom mode with an accessible pressed state", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const toggleButton = screen.getByRole("button", { name: "수업 모드 켜기" });
+    expect(toggleButton).toHaveAttribute("aria-pressed", "false");
+
+    await user.click(toggleButton);
+
+    expect(screen.getByRole("button", { name: "수업 모드 끄기" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(screen.getByRole("status")).toHaveTextContent("수업 모드가 켜졌어요.");
+  });
+
   it("passes rainy mission when umbrella, boots, and windbreaker are selected", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -42,6 +72,28 @@ describe("weather outfit planner", () => {
     expect(document.activeElement).toBe(confirmButton);
   });
 
+  it("retries the same mission from the feedback dialog", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(getWardrobeButtonByLabel("우산"));
+    await user.click(getWardrobeButtonByLabel("장화"));
+    await user.click(getWardrobeButtonByLabel("바람막이"));
+    await user.click(screen.getByRole("button", { name: "외출하기" }));
+
+    await screen.findByRole("dialog", { name: "잘했어요!" });
+    await user.click(screen.getByRole("button", { name: "다시 도전" }));
+
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: /오늘의 날씨: 비 오고 바람이 불어요/,
+      }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /우산 빼기/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("같은 미션으로 다시 도전해요.");
+  });
+
   it("keeps focus inside dialog and restores it when pressing Escape", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -55,9 +107,13 @@ describe("weather outfit planner", () => {
 
     await user.click(checkButton);
     const confirmButton = await screen.findByRole("button", { name: "확인" });
+    const retryButton = await screen.findByRole("button", { name: "다시 도전" });
     expect(document.activeElement).toBe(confirmButton);
 
     await user.keyboard("{Tab}");
+    expect(document.activeElement).toBe(retryButton);
+
+    await user.keyboard("{Shift>}{Tab}{/Shift}");
     expect(document.activeElement).toBe(confirmButton);
 
     await user.keyboard("{Escape}");

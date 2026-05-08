@@ -29,6 +29,11 @@ export default function MissionPanel({
 
       <h2 className="mission-title">{activeMission.title}</h2>
       <p className="mission-description">{activeMission.description}</p>
+      <details className="mission-rule">
+        <summary>생활 수칙 보기</summary>
+        <p>{activeMission.lessonRule}</p>
+        <p className="teacher-prompt">교사 질문: {activeMission.teacherPrompt}</p>
+      </details>
 
       <label htmlFor="mission-select" className="mission-select-label">
         날씨 미션 선택

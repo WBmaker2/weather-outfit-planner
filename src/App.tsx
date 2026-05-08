@@ -16,6 +16,7 @@ function App() {
   const [wornItemIds, setWornItemIds] = useState<string[]>([]);
   const [score, setScore] = useState<OutfitScore | null>(null);
   const [statusMessage, setStatusMessage] = useState("오늘의 날씨 미션을 시작해볼까요?");
+  const [isClassroomMode, setIsClassroomMode] = useState(false);
 
   const activeMission = missions.find((mission) => mission.id === activeMissionId) ?? missions[0];
   const wornItems: OutfitItem[] = wornItemIds
@@ -72,9 +73,33 @@ function App() {
     setScore(null);
   };
 
+  const retryMission = () => {
+    setWornItemIds([]);
+    setScore(null);
+    setStatusMessage("같은 미션으로 다시 도전해요.");
+  };
+
+  const toggleClassroomMode = () => {
+    setIsClassroomMode((currentMode) => {
+      const nextMode = !currentMode;
+      setStatusMessage(nextMode ? "수업 모드가 켜졌어요." : "수업 모드가 꺼졌어요.");
+      return nextMode;
+    });
+  };
+
   return (
-    <main className="app-shell">
-      <h1>날씨 코디 게임</h1>
+    <main className={`app-shell${isClassroomMode ? " is-classroom-mode" : ""}`}>
+      <header className="app-header">
+        <h1>날씨 코디 게임</h1>
+        <button
+          type="button"
+          className="classroom-mode-toggle"
+          aria-pressed={isClassroomMode}
+          onClick={toggleClassroomMode}
+        >
+          {isClassroomMode ? "수업 모드 끄기" : "수업 모드 켜기"}
+        </button>
+      </header>
       <MissionPanel
         missions={missions}
         activeMissionId={activeMissionId}
@@ -112,7 +137,7 @@ function App() {
         </button>
       </section>
 
-      <FeedbackDialog score={score} onClose={confirmFeedback} />
+      <FeedbackDialog score={score} onClose={confirmFeedback} onRetry={retryMission} />
     </main>
   );
 }

@@ -36,6 +36,18 @@ body {
   text-align: left;
 }
 
+.app-shell.is-classroom-mode {
+  width: min(1280px, calc(100vw - 2rem));
+  gap: 1.15rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+}
+
 .app-shell h1 {
   margin: 0;
   color: #0f3f5f;
@@ -43,9 +55,42 @@ body {
   line-height: 1.2;
 }
 
+.app-shell.is-classroom-mode h1 {
+  font-size: 2.35rem;
+}
+
 .app-shell p {
   margin: 0;
   color: #3b4b5f;
+}
+
+.classroom-mode-toggle {
+  border: 1px solid #9fc7e8;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #154767;
+  min-height: 2.6rem;
+  padding: 0 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.classroom-mode-toggle:hover,
+.classroom-mode-toggle:focus-visible {
+  background: #eef7ff;
+  border-color: #5c9bd0;
+  outline: none;
+}
+
+.classroom-mode-toggle:focus-visible {
+  box-shadow: 0 0 0 3px rgb(56 124 191 / 22%);
+}
+
+.classroom-mode-toggle[aria-pressed='true'] {
+  background: #154767;
+  border-color: #154767;
+  color: #ffffff;
 }
 
 .mission-panel,
@@ -103,6 +148,36 @@ body {
   padding: 0.75rem;
   border: 1px solid #d6e5f7;
   line-height: 1.55;
+}
+
+.mission-rule {
+  border: 1px solid #cfe5cc;
+  border-radius: 8px;
+  background: #f8fff7;
+  color: #254b33;
+  overflow: hidden;
+}
+
+.mission-rule summary {
+  padding: 0.72rem 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mission-rule summary:focus-visible {
+  outline: 3px solid rgb(62 132 83 / 28%);
+  outline-offset: -3px;
+}
+
+.mission-rule p {
+  padding: 0 0.8rem 0.75rem;
+  color: #284b35;
+  line-height: 1.55;
+}
+
+.mission-rule .teacher-prompt {
+  color: #425d4b;
+  font-weight: 700;
 }
 
 .mission-select-label {
@@ -390,6 +465,20 @@ body {
   cursor: pointer;
 }
 
+.dialog-actions {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.feedback-dialog .secondary-action {
+  border: 1px solid #b7cfe5;
+  background: #f3f8fc;
+  color: #1c4e72;
+}
+
 .feedback-dialog button:hover,
 .feedback-dialog button:focus-visible {
   background: #246495;
@@ -400,11 +489,25 @@ body {
   box-shadow: 0 0 0 3px rgb(255 255 255 / 72%), 0 0 0 6px rgb(47 121 180 / 28%);
 }
 
+.feedback-dialog .secondary-action:hover,
+.feedback-dialog .secondary-action:focus-visible {
+  background: #e5f1fb;
+}
+
 @media (max-width: 860px) {
   .app-shell {
     width: calc(100vw - 1.4rem);
     padding-top: 1rem;
     gap: 0.85rem;
+  }
+
+  .app-shell.is-classroom-mode {
+    width: calc(100vw - 1.4rem);
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .game-layout {
@@ -438,6 +541,14 @@ body {
 
   .app-shell h1 {
     font-size: 1.55rem;
+  }
+
+  .app-shell.is-classroom-mode h1 {
+    font-size: 1.75rem;
+  }
+
+  .classroom-mode-toggle {
+    width: 100%;
   }
 
   .mission-panel,
@@ -484,7 +595,12 @@ body {
 
   .feedback-dialog > h3,
   .feedback-dialog > p,
-  .feedback-dialog > button {
+  .feedback-dialog > .dialog-actions {
+    width: 100%;
+  }
+
+  .dialog-actions,
+  .dialog-actions button {
     width: 100%;
   }
 
