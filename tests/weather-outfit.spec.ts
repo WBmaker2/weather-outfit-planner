@@ -8,6 +8,9 @@ const windbreakerButton = /^.*바람막이$/
 test('student can complete rainy outfit mission', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { name: rainyMissionHeading })).toBeVisible()
+  const checklist = page.getByRole('region', { name: '준비물 체크리스트' })
+  await expect(checklist).toContainText('0/3')
+  await expect(checklist.locator('.mission-checklist-item').filter({ hasText: '우산' })).toContainText('아직')
 
   await page.getByText('생활 수칙 보기').click()
   await expect(page.getByText('비 오는 날에는 발과 몸이 젖지 않도록 우산, 장화, 바람막이를 챙겨요.')).toBeVisible()
@@ -15,6 +18,8 @@ test('student can complete rainy outfit mission', async ({ page }) => {
   await page.getByRole('button', { name: umbrellaButton }).click()
   await page.getByRole('button', { name: rainBootsButton }).click()
   await page.getByRole('button', { name: windbreakerButton }).click()
+  await expect(checklist).toContainText('3/3')
+  await expect(checklist.locator('.mission-checklist-item').filter({ hasText: '우산' })).toContainText('완료')
   await expect(page.locator('[data-testid="character-layer-umbrella"]')).toBeVisible()
   await expect(page.locator('[data-testid="character-layer-rain-boots"]')).toBeVisible()
   await expect(page.locator('[data-testid="character-layer-windbreaker"]')).toBeVisible()

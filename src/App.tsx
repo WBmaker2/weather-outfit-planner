@@ -5,9 +5,11 @@ import {
   scoreOutfit,
   OutfitItem,
   OutfitScore,
+  getMissionChecklist,
 } from "./game/weatherOutfit";
 import CharacterStage from "./components/CharacterStage";
 import FeedbackDialog from "./components/FeedbackDialog";
+import MissionChecklist from "./components/MissionChecklist";
 import MissionPanel from "./components/MissionPanel";
 import WardrobeItem from "./components/WardrobeItem";
 
@@ -22,6 +24,7 @@ function App() {
   const wornItems: OutfitItem[] = wornItemIds
     .map((itemId) => outfitItems.find((item) => item.id === itemId))
     .filter((item): item is OutfitItem => Boolean(item));
+  const missionChecklist = getMissionChecklist(activeMission, wornItemIds);
 
   const wearItem = (itemId: string) => {
     const newItem = outfitItems.find((item) => item.id === itemId);
@@ -105,6 +108,7 @@ function App() {
         activeMissionId={activeMissionId}
         onMissionChange={changeMission}
       />
+      <MissionChecklist checklist={missionChecklist} />
 
       <section className="game-layout">
         <CharacterStage

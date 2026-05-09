@@ -1,4 +1,5 @@
 import type { OutfitItem } from '../game/weatherOutfit'
+import ItemIllustration from './ItemIllustration'
 
 type WardrobeItemProps = {
   item: OutfitItem
@@ -26,7 +27,7 @@ export default function WardrobeItem({
       }}
     >
       <span className="wardrobe-item-icon" aria-hidden="true">
-        {item.icon}
+        <ItemIllustration itemId={item.id} />
       </span>
       <span>{item.label}</span>
     </button>

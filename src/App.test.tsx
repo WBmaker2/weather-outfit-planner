@@ -9,6 +9,11 @@ const getWardrobeButtonByLabel = (label: string) =>
 const getWornItemRemoveButton = (label: string) =>
   screen.getAllByRole("button", { name: new RegExp(`${label} 빼기`) });
 
+const getChecklist = () => screen.getByRole("region", { name: "준비물 체크리스트" });
+
+const getChecklistItem = (label: string) =>
+  within(getChecklist()).getByText(label).closest(".mission-checklist-item");
+
 describe("weather outfit planner", () => {
   it("shows the first mission and key wardrobe items on initial render", () => {
     render(<App />);
@@ -24,6 +29,7 @@ describe("weather outfit planner", () => {
     ).toBeInTheDocument();
     expect(getWardrobeButtonByLabel("우산")).toBeInTheDocument();
     expect(getWardrobeButtonByLabel("장화")).toBeInTheDocument();
+    expect(getChecklist()).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "외출하기" })).toBeInTheDocument();
   });
 
@@ -80,6 +86,46 @@ describe("weather outfit planner", () => {
     expect(screen.getByTestId("character-layer-rain-boots")).toBeInTheDocument();
     expect(screen.getByTestId("character-layer-windbreaker")).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("우산 해제 완료.");
+  });
+
+  it("updates the pre-outing checklist while students select items", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    expect(getChecklistItem("우산")).toHaveTextContent("아직");
+    expect(getChecklistItem("장화")).toHaveTextContent("아직");
+    expect(getChecklistItem("바람막이")).toHaveTextContent("아직");
+    expect(getChecklist()).toHaveTextContent("0/3");
+
+    await user.click(getWardrobeButtonByLabel("우산"));
+    await user.click(getWardrobeButtonByLabel("장화"));
+
+    expect(getChecklistItem("우산")).toHaveTextContent("완료");
+    expect(getChecklistItem("장화")).toHaveTextContent("완료");
+    expect(getChecklistItem("바람막이")).toHaveTextContent("아직");
+    expect(getChecklist()).toHaveTextContent("2/3");
+
+    await user.click(getWardrobeButtonByLabel("샌들"));
+
+    expect(getChecklist()).toHaveTextContent("다시 볼 물건");
+    expect(getChecklist()).toHaveTextContent("샌들 빼기");
+  });
+
+  it("uses custom item illustrations without changing accessible button names", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const umbrellaButton = screen.getByRole("button", { name: "우산" });
+    expect(umbrellaButton.querySelector(".item-illustration")).toBeInTheDocument();
+
+    await user.click(umbrellaButton);
+
+    const wornUmbrellaButton = screen.getByRole("button", { name: "우산 빼기" });
+    expect(wornUmbrellaButton.querySelector(".item-illustration")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "우산" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
   });
 
   it("passes rainy mission when umbrella, boots, and windbreaker are selected", async () => {
@@ -200,6 +246,10 @@ describe("weather outfit planner", () => {
     expect(
       screen.getByText("아직 아무것도 입지 않았어요. 옷을 챙겨보세요."),
     ).toBeInTheDocument();
+    expect(getChecklistItem("모자")).toHaveTextContent("아직");
+    expect(getChecklistItem("반팔")).toHaveTextContent("아직");
+    expect(getChecklistItem("물병")).toHaveTextContent("아직");
+    expect(within(getChecklist()).queryByText("우산")).not.toBeInTheDocument();
   });
 
   it("toggles an item off when the same wardrobe button is clicked twice", async () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getItemLabel, missions, scoreOutfit } from './weatherOutfit'
+import { getItemLabel, getMissionChecklist, missions, scoreOutfit } from './weatherOutfit'
 
 describe('scoreOutfit', () => {
   it('passes rainy windy weather when umbrella, rain boots, and windbreaker are selected', () => {
@@ -62,5 +62,27 @@ describe('scoreOutfit', () => {
 describe('getItemLabel', () => {
   it('returns the Korean label for known item ids', () => {
     expect(getItemLabel('umbrella')).toBe('우산')
+  })
+})
+
+describe('getMissionChecklist', () => {
+  it('marks required rainy mission items as complete or missing in real time', () => {
+    const mission = missions.find((item) => item.id === 'rain-wind')
+    const checklist = getMissionChecklist(mission!, ['umbrella'])
+
+    expect(checklist.requiredItems).toEqual([
+      { itemId: 'umbrella', label: '우산', status: 'complete' },
+      { itemId: 'rain-boots', label: '장화', status: 'missing' },
+      { itemId: 'windbreaker', label: '바람막이', status: 'missing' },
+    ])
+  })
+
+  it('lists selected unsuitable items separately', () => {
+    const mission = missions.find((item) => item.id === 'rain-wind')
+    const checklist = getMissionChecklist(mission!, ['sandals'])
+
+    expect(checklist.unsuitableItems).toEqual([
+      { itemId: 'sandals', label: '샌들', status: 'complete' },
+    ])
   })
 })

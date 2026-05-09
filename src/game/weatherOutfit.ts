@@ -23,6 +23,19 @@ export type OutfitScore = {
   message: string
 }
 
+export type ChecklistStatus = 'complete' | 'missing'
+
+export type MissionChecklistItem = {
+  itemId: string
+  label: string
+  status: ChecklistStatus
+}
+
+export type MissionChecklist = {
+  requiredItems: MissionChecklistItem[]
+  unsuitableItems: MissionChecklistItem[]
+}
+
 export const outfitItems: OutfitItem[] = [
   { id: 'umbrella', label: '우산', icon: '☂️', category: 'supply' },
   { id: 'rain-boots', label: '장화', icon: '🥾', category: 'shoes' },
@@ -83,6 +96,28 @@ export const missions: WeatherMission[] = [
 
 export function getItemLabel(itemId: string): string {
   return outfitItems.find((item) => item.id === itemId)?.label ?? itemId
+}
+
+export function getMissionChecklist(
+  mission: WeatherMission,
+  selectedItemIds: string[],
+): MissionChecklist {
+  const selected = new Set(selectedItemIds)
+
+  return {
+    requiredItems: mission.requiredItemIds.map((itemId) => ({
+      itemId,
+      label: getItemLabel(itemId),
+      status: selected.has(itemId) ? 'complete' : 'missing',
+    })),
+    unsuitableItems: mission.unsuitableItemIds
+      .filter((itemId) => selected.has(itemId))
+      .map((itemId) => ({
+        itemId,
+        label: getItemLabel(itemId),
+        status: 'complete',
+      })),
+  }
 }
 
 function getKoreanTailConsonant(label: string): boolean {
