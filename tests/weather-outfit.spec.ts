@@ -4,6 +4,8 @@ const rainyMissionHeading = /^오늘의 날씨: 비 오고 바람이 불어요$/
 const umbrellaButton = /^.*우산$/
 const rainBootsButton = /^.*장화$/
 const windbreakerButton = /^.*바람막이$/
+const maskButton = /^.*마스크$/
+const lightJacketButton = /^.*얇은 겉옷$/
 
 test('student can complete rainy outfit mission', async ({ page }) => {
   await page.goto('/')
@@ -54,4 +56,32 @@ test('layout keeps core controls visible on phone-sized viewport', async ({ page
   await expect(page.getByRole('region', { name: '외출 준비 수업 흐름' })).toBeVisible()
   await expect(page.getByRole('button', { name: umbrellaButton })).toBeVisible()
   await expect(page.getByRole('button', { name: /^.*외출하기$/ })).toBeVisible()
+})
+
+test('teacher can build a custom rain and dust mission', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: '수업 모드 켜기' }).click()
+
+  const teacherBuilder = page.getByRole('region', { name: '오늘의 날씨 만들기' })
+  await expect(teacherBuilder.getByRole('button', { name: '미션 만들기' })).toBeDisabled()
+
+  await teacherBuilder.getByRole('button', { name: /비.*몸과 발/ }).click()
+  await teacherBuilder.getByRole('button', { name: /먼지.*먼지를 덜/ }).click()
+  await expect(teacherBuilder).toContainText('오늘의 날씨: 비, 먼지 조건이 있어요')
+  await teacherBuilder.getByRole('button', { name: '미션 만들기' }).click()
+
+  await expect(page.getByRole('heading', { name: /^오늘의 날씨: 비, 먼지 조건이 있어요$/ })).toBeVisible()
+  const checklist = page.getByRole('region', { name: '준비물 체크리스트' })
+  await expect(checklist).toContainText('0/4')
+  await expect(checklist).toContainText('마스크')
+  await expect(checklist).toContainText('얇은 겉옷')
+
+  await page.getByRole('button', { name: umbrellaButton }).click()
+  await page.getByRole('button', { name: rainBootsButton }).click()
+  await page.getByRole('button', { name: maskButton }).click()
+  await page.getByRole('button', { name: lightJacketButton }).click()
+
+  await expect(checklist).toContainText('4/4')
+  await page.getByRole('button', { name: /^.*외출하기$/ }).click()
+  await expect(page.getByRole('dialog')).toContainText('완벽한 외출 준비 끝!')
 })

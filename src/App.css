@@ -94,6 +94,7 @@ body {
 }
 
 .mission-panel,
+.teacher-weather-builder,
 .classroom-guide,
 .mission-checklist,
 .character-stage,
@@ -218,6 +219,201 @@ body {
   outline: none;
   border-color: #2e6da2;
   background-color: #eef6ff;
+}
+
+.teacher-weather-builder {
+  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+  border-color: #cfe5cc;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8fff7 100%);
+}
+
+.teacher-weather-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.teacher-weather-eyebrow {
+  margin: 0 0 0.2rem;
+  color: #44607d;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.teacher-weather-builder h2 {
+  margin: 0;
+  color: #0d3c61;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.teacher-weather-create {
+  border: 1px solid #2f855a;
+  border-radius: 8px;
+  background: #1f8a4c;
+  color: #ffffff;
+  min-height: 2.55rem;
+  padding: 0 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.teacher-weather-create:hover,
+.teacher-weather-create:focus-visible {
+  background: #16653a;
+  outline: none;
+}
+
+.teacher-weather-create:focus-visible {
+  box-shadow: 0 0 0 3px rgb(31 138 76 / 22%);
+}
+
+.teacher-weather-create:disabled {
+  background: #dbe7dd;
+  border-color: #c1d4c5;
+  color: #5c725f;
+  cursor: not-allowed;
+}
+
+.weather-condition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.6rem;
+}
+
+.weather-condition-toggle {
+  min-height: 4.7rem;
+  border: 1px solid #b8d9f3;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1e3045;
+  padding: 0.62rem;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.62rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.weather-condition-toggle:hover,
+.weather-condition-toggle:focus-visible {
+  background: #f0f9ff;
+  border-color: #75a9de;
+  outline: none;
+}
+
+.weather-condition-toggle:focus-visible {
+  box-shadow: 0 0 0 3px rgb(56 124 191 / 22%);
+}
+
+.weather-condition-toggle[aria-pressed='true'] {
+  background: #eefbf2;
+  border-color: #57b879;
+  box-shadow: inset 0 0 0 2px rgb(87 184 121 / 18%);
+}
+
+.weather-condition-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: #eef8ff;
+  display: inline-grid;
+  place-items: center;
+  font-size: 1.35rem;
+  box-shadow: inset 0 -3px 0 rgb(15 63 95 / 7%);
+}
+
+.weather-condition-copy {
+  min-width: 0;
+  display: grid;
+  gap: 0.18rem;
+}
+
+.weather-condition-label {
+  color: #102f45;
+  font-weight: 900;
+}
+
+.weather-condition-description {
+  color: #4a6278;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.teacher-weather-preview {
+  border: 1px solid #d7e4f3;
+  border-radius: 8px;
+  background: #fafcff;
+  padding: 0.72rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.teacher-weather-preview-title {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.teacher-weather-preview-title p,
+.teacher-weather-empty {
+  margin: 0;
+  color: #44607d;
+  font-weight: 700;
+}
+
+.teacher-weather-preview-title strong {
+  color: #0d3c61;
+  line-height: 1.35;
+}
+
+.teacher-weather-preview-group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.teacher-weather-preview-group h3 {
+  margin: 0;
+  color: #27445c;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.teacher-weather-preview-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.teacher-weather-preview-items li {
+  min-height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  border: 1px solid #b6d2eb;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #17405f;
+  padding: 0.32rem 0.68rem 0.32rem 0.38rem;
+  font-weight: 800;
+}
+
+.teacher-weather-item-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #fff9e8;
+  display: inline-grid;
+  place-items: center;
 }
 
 .classroom-guide {
@@ -1418,6 +1614,7 @@ body {
   }
 
   .mission-panel,
+  .teacher-weather-builder,
   .classroom-guide,
   .mission-checklist,
   .character-stage,
@@ -1440,6 +1637,19 @@ body {
   .mission-title {
     font-size: 1.18rem;
     line-height: 1.35;
+  }
+
+  .teacher-weather-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .teacher-weather-create {
+    width: 100%;
+  }
+
+  .weather-condition-grid {
+    grid-template-columns: 1fr;
   }
 
   .classroom-guide-header,

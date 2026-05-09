@@ -17,6 +17,17 @@ export type WeatherMission = {
   unsuitableItemIds: string[]
 }
 
+export type WeatherConditionId = 'rain' | 'wind' | 'heat' | 'dust'
+
+export type WeatherCondition = {
+  id: WeatherConditionId
+  label: string
+  icon: string
+  description: string
+  requiredItemIds: string[]
+  unsuitableItemIds: string[]
+}
+
 export type OutfitScore = {
   passed: boolean
   missingItemIds: string[]
@@ -50,6 +61,41 @@ export const outfitItems: OutfitItem[] = [
   { id: 'sandals', label: '샌들', icon: '🩴', category: 'shoes' },
   { id: 'mask', label: '마스크', icon: '😷', category: 'supply' },
   { id: 'light-jacket', label: '얇은 겉옷', icon: '🥼', category: 'clothes' },
+]
+
+export const weatherConditions: WeatherCondition[] = [
+  {
+    id: 'rain',
+    label: '비',
+    icon: '🌧️',
+    description: '몸과 발이 젖지 않게 준비해요.',
+    requiredItemIds: ['umbrella', 'rain-boots'],
+    unsuitableItemIds: ['sandals'],
+  },
+  {
+    id: 'wind',
+    label: '바람',
+    icon: '🌬️',
+    description: '찬 바람을 막을 겉옷을 챙겨요.',
+    requiredItemIds: ['windbreaker'],
+    unsuitableItemIds: [],
+  },
+  {
+    id: 'heat',
+    label: '더움',
+    icon: '☀️',
+    description: '햇볕과 갈증을 조심해요.',
+    requiredItemIds: ['cap', 'short-sleeve', 'water-bottle'],
+    unsuitableItemIds: ['padded-coat', 'scarf', 'gloves'],
+  },
+  {
+    id: 'dust',
+    label: '먼지',
+    icon: '😷',
+    description: '먼지를 덜 마시고 몸을 부드럽게 보호해요.',
+    requiredItemIds: ['mask', 'light-jacket'],
+    unsuitableItemIds: ['padded-coat'],
+  },
 ]
 
 export const missions: WeatherMission[] = [
@@ -117,6 +163,55 @@ export const missions: WeatherMission[] = [
 
 export function getItemLabel(itemId: string): string {
   return outfitItems.find((item) => item.id === itemId)?.label ?? itemId
+}
+
+function uniqueItems(itemIds: string[]): string[] {
+  return Array.from(new Set(itemIds))
+}
+
+function formatConditionList(conditions: WeatherCondition[]): string {
+  return conditions.map((condition) => condition.label).join(', ')
+}
+
+export function buildCustomWeatherMission(
+  conditionIds: WeatherConditionId[],
+): WeatherMission | null {
+  const selectedConditions = weatherConditions.filter((condition) =>
+    conditionIds.includes(condition.id),
+  )
+
+  if (selectedConditions.length === 0) {
+    return null
+  }
+
+  const requiredItemIds = uniqueItems(
+    selectedConditions.flatMap((condition) => condition.requiredItemIds),
+  )
+  const unsuitableItemIds = uniqueItems(
+    selectedConditions.flatMap((condition) => condition.unsuitableItemIds),
+  ).filter((itemId) => !requiredItemIds.includes(itemId))
+  const conditionList = formatConditionList(selectedConditions)
+  const requiredLabels = requiredItemIds.map(getItemLabel)
+  const unsuitableLabels = unsuitableItemIds.map(getItemLabel)
+  const icon = selectedConditions[0]?.icon ?? '🌤️'
+
+  return {
+    id: `teacher-custom-${selectedConditions.map((condition) => condition.id).join('-')}`,
+    title: `오늘의 날씨: ${conditionList} 조건이 있어요`,
+    description: `${conditionList} 날씨에 맞는 옷차림을 함께 만들어봐요.`,
+    lessonRule: `필요한 준비물: ${requiredLabels.join(', ')}.${
+      unsuitableLabels.length > 0 ? ` 다시 볼 물건: ${unsuitableLabels.join(', ')}.` : ''
+    }`,
+    teacherPrompt: `${conditionList} 조건이 함께 있을 때 가장 먼저 챙길 준비물은 무엇일까요?`,
+    discussionQuestions: [
+      `${conditionList} 날씨에서 가장 중요한 준비물은 무엇인가요?`,
+      `오늘 고른 물건 중 우리 몸을 지켜주는 물건은 무엇인가요?`,
+      `빼야 할 물건이 있다면 왜 오늘 날씨와 맞지 않을까요?`,
+    ],
+    weatherIcon: icon,
+    requiredItemIds,
+    unsuitableItemIds,
+  }
 }
 
 export function getMissionChecklist(

@@ -5,6 +5,9 @@ import {
   scoreOutfit,
   OutfitItem,
   OutfitScore,
+  WeatherConditionId,
+  WeatherMission,
+  buildCustomWeatherMission,
   getMissionChecklist,
 } from "./game/weatherOutfit";
 import CharacterStage from "./components/CharacterStage";
@@ -12,6 +15,7 @@ import ClassroomGuide from "./components/ClassroomGuide";
 import FeedbackDialog from "./components/FeedbackDialog";
 import MissionChecklist from "./components/MissionChecklist";
 import MissionPanel from "./components/MissionPanel";
+import TeacherWeatherBuilder from "./components/TeacherWeatherBuilder";
 import WardrobeItem from "./components/WardrobeItem";
 
 function App() {
@@ -20,12 +24,17 @@ function App() {
   const [score, setScore] = useState<OutfitScore | null>(null);
   const [statusMessage, setStatusMessage] = useState("오늘의 날씨 미션을 시작해볼까요?");
   const [isClassroomMode, setIsClassroomMode] = useState(false);
+  const [teacherConditionIds, setTeacherConditionIds] = useState<WeatherConditionId[]>([]);
+  const [customMission, setCustomMission] = useState<WeatherMission | null>(null);
 
-  const activeMission = missions.find((mission) => mission.id === activeMissionId) ?? missions[0];
+  const availableMissions = customMission ? [customMission, ...missions] : missions;
+  const activeMission =
+    availableMissions.find((mission) => mission.id === activeMissionId) ?? availableMissions[0];
   const wornItems: OutfitItem[] = wornItemIds
     .map((itemId) => outfitItems.find((item) => item.id === itemId))
     .filter((item): item is OutfitItem => Boolean(item));
   const missionChecklist = getMissionChecklist(activeMission, wornItemIds);
+  const teacherPreviewMission = buildCustomWeatherMission(teacherConditionIds);
 
   const wearItem = (itemId: string) => {
     const newItem = outfitItems.find((item) => item.id === itemId);
@@ -62,6 +71,28 @@ function App() {
     setWornItemIds([]);
     setScore(null);
     setStatusMessage("새로운 미션을 골랐어요. 다시 시작해볼까요?");
+  };
+
+  const toggleTeacherCondition = (conditionId: WeatherConditionId) => {
+    setTeacherConditionIds((prevIds) =>
+      prevIds.includes(conditionId)
+        ? prevIds.filter((existingId) => existingId !== conditionId)
+        : [...prevIds, conditionId],
+    );
+    setScore(null);
+  };
+
+  const createTeacherMission = () => {
+    if (!teacherPreviewMission) {
+      setStatusMessage("날씨 조건을 먼저 골라주세요.");
+      return;
+    }
+
+    setCustomMission(teacherPreviewMission);
+    setActiveMissionId(teacherPreviewMission.id);
+    setWornItemIds([]);
+    setScore(null);
+    setStatusMessage("교사용 오늘의 날씨 미션을 만들었어요.");
   };
 
   const checkOutfit = () => {
@@ -105,17 +136,25 @@ function App() {
         </button>
       </header>
       <MissionPanel
-        missions={missions}
+        missions={availableMissions}
         activeMissionId={activeMissionId}
         onMissionChange={changeMission}
       />
       {isClassroomMode ? (
-        <ClassroomGuide
-          mission={activeMission}
-          checklist={missionChecklist}
-          selectedItemCount={wornItemIds.length}
-          score={score}
-        />
+        <>
+          <TeacherWeatherBuilder
+            selectedConditionIds={teacherConditionIds}
+            previewMission={teacherPreviewMission}
+            onToggleCondition={toggleTeacherCondition}
+            onCreateMission={createTeacherMission}
+          />
+          <ClassroomGuide
+            mission={activeMission}
+            checklist={missionChecklist}
+            selectedItemCount={wornItemIds.length}
+            score={score}
+          />
+        </>
       ) : null}
       <MissionChecklist checklist={missionChecklist} />
 

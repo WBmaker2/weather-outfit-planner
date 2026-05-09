@@ -19,6 +19,12 @@ const getClassroomGuide = () => screen.getByRole("region", { name: "외출 준�
 const getClassroomStep = (label: string) =>
   within(getClassroomGuide()).getByText(label).closest(".classroom-step");
 
+const getTeacherWeatherBuilder = () =>
+  screen.getByRole("region", { name: "오늘의 날씨 만들기" });
+
+const getWeatherConditionButton = (label: string) =>
+  within(getTeacherWeatherBuilder()).getByRole("button", { name: new RegExp(label) });
+
 describe("weather outfit planner", () => {
   it("shows the first mission and key wardrobe items on initial render", () => {
     render(<App />);
@@ -120,6 +126,45 @@ describe("weather outfit planner", () => {
     expect(await screen.findByRole("dialog", { name: "잘했어요!" })).toBeInTheDocument();
     expect(getClassroomGuide()).toHaveTextContent("4/4");
     expect(getClassroomStep("외출하기")).toHaveTextContent("완료");
+  });
+
+  it("lets teachers build a custom today weather mission from combined conditions", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    expect(screen.queryByRole("region", { name: "오늘의 날씨 만들기" })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "수업 모드 켜기" }));
+
+    const teacherBuilder = getTeacherWeatherBuilder();
+    const createButton = within(teacherBuilder).getByRole("button", { name: "미션 만들기" });
+    expect(createButton).toBeDisabled();
+
+    await user.click(getWeatherConditionButton("비"));
+    await user.click(getWeatherConditionButton("먼지"));
+
+    expect(createButton).toBeEnabled();
+    expect(teacherBuilder).toHaveTextContent("오늘의 날씨: 비, 먼지 조건이 있어요");
+    expect(teacherBuilder).toHaveTextContent("우산");
+    expect(teacherBuilder).toHaveTextContent("장화");
+    expect(teacherBuilder).toHaveTextContent("마스크");
+    expect(teacherBuilder).toHaveTextContent("얇은 겉옷");
+
+    await user.click(createButton);
+
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "오늘의 날씨: 비, 먼지 조건이 있어요",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "교사용 오늘의 날씨 미션을 만들었어요.",
+    );
+    expect(getChecklist()).toHaveTextContent("0/4");
+    expect(getChecklistItem("우산")).toHaveTextContent("아직");
+    expect(getChecklistItem("마스크")).toHaveTextContent("아직");
+    expect(within(getChecklist()).queryByText("바람막이")).not.toBeInTheDocument();
   });
 
   it("updates the character outfit layers as items are selected and removed", async () => {

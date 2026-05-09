@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { getItemLabel, getMissionChecklist, missions, scoreOutfit } from './weatherOutfit'
+import {
+  buildCustomWeatherMission,
+  getItemLabel,
+  getMissionChecklist,
+  missions,
+  scoreOutfit,
+} from './weatherOutfit'
 
 describe('scoreOutfit', () => {
   it('passes rainy windy weather when umbrella, rain boots, and windbreaker are selected', () => {
@@ -84,5 +90,34 @@ describe('getMissionChecklist', () => {
     expect(checklist.unsuitableItems).toEqual([
       { itemId: 'sandals', label: '샌들', status: 'complete' },
     ])
+  })
+})
+
+describe('buildCustomWeatherMission', () => {
+  it('returns null when no teacher weather condition is selected', () => {
+    expect(buildCustomWeatherMission([])).toBeNull()
+  })
+
+  it('combines rain, wind, heat, and dust into one teacher mission without duplicates', () => {
+    const mission = buildCustomWeatherMission(['rain', 'wind', 'heat', 'dust'])
+
+    expect(mission).toMatchObject({
+      id: 'teacher-custom-rain-wind-heat-dust',
+      title: '오늘의 날씨: 비, 바람, 더움, 먼지 조건이 있어요',
+      requiredItemIds: [
+        'umbrella',
+        'rain-boots',
+        'windbreaker',
+        'cap',
+        'short-sleeve',
+        'water-bottle',
+        'mask',
+        'light-jacket',
+      ],
+      unsuitableItemIds: ['sandals', 'padded-coat', 'scarf', 'gloves'],
+    })
+    expect(mission?.lessonRule).toContain('필요한 준비물: 우산, 장화, 바람막이')
+    expect(mission?.lessonRule).not.toContain('을/를')
+    expect(mission?.discussionQuestions).toHaveLength(3)
   })
 })
