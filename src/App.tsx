@@ -8,6 +8,7 @@ import {
   getMissionChecklist,
 } from "./game/weatherOutfit";
 import CharacterStage from "./components/CharacterStage";
+import ClassroomGuide from "./components/ClassroomGuide";
 import FeedbackDialog from "./components/FeedbackDialog";
 import MissionChecklist from "./components/MissionChecklist";
 import MissionPanel from "./components/MissionPanel";
@@ -108,6 +109,14 @@ function App() {
         activeMissionId={activeMissionId}
         onMissionChange={changeMission}
       />
+      {isClassroomMode ? (
+        <ClassroomGuide
+          mission={activeMission}
+          checklist={missionChecklist}
+          selectedItemCount={wornItemIds.length}
+          score={score}
+        />
+      ) : null}
       <MissionChecklist checklist={missionChecklist} />
 
       <section className="game-layout">

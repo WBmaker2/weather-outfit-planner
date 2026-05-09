@@ -94,6 +94,7 @@ body {
 }
 
 .mission-panel,
+.classroom-guide,
 .mission-checklist,
 .character-stage,
 .wardrobe-panel,
@@ -217,6 +218,186 @@ body {
   outline: none;
   border-color: #2e6da2;
   background-color: #eef6ff;
+}
+
+.classroom-guide {
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+  border-color: #b9d9f1;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f3fbff 100%);
+}
+
+.classroom-guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.classroom-guide-eyebrow {
+  margin: 0 0 0.2rem;
+  color: #44607d;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.classroom-guide h2 {
+  margin: 0;
+  color: #0d3c61;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.classroom-guide-count {
+  margin: 0;
+  min-width: 4.4rem;
+  min-height: 2.4rem;
+  border-radius: 999px;
+  background: #fff7e6;
+  border: 1px solid #f1cb7f;
+  color: #7a4a04;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.classroom-progress {
+  width: 100%;
+  height: 0.75rem;
+  border: 1px solid #b8d9f3;
+  border-radius: 999px;
+  background: #eaf5ff;
+  overflow: hidden;
+}
+
+.classroom-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #38bdf8 0%, #22c55e 100%);
+  transition: width 180ms ease-out;
+}
+
+.classroom-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+}
+
+.classroom-step {
+  min-height: 3.25rem;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid #c8d9eb;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.5rem 0.62rem;
+}
+
+.classroom-step-number {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: #eef8ff;
+  color: #0d4d76;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.classroom-step-label {
+  color: #1e3045;
+  font-weight: 800;
+  min-width: 0;
+}
+
+.classroom-step-status {
+  border-radius: 999px;
+  padding: 0.22rem 0.48rem;
+  color: #17405f;
+  background: #eaf5ff;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.classroom-step.is-complete {
+  background: #f0fbf4;
+  border-color: #93d7aa;
+}
+
+.classroom-step.is-complete .classroom-step-number,
+.classroom-step.is-complete .classroom-step-status {
+  color: #14532d;
+  background: #dcfce7;
+}
+
+.classroom-step.is-active {
+  background: #fffaf0;
+  border-color: #f0c879;
+  box-shadow: 0 0 0 3px rgb(240 200 121 / 18%);
+}
+
+.classroom-step.is-active .classroom-step-number,
+.classroom-step.is-active .classroom-step-status {
+  color: #7c4a03;
+  background: #fef3c7;
+}
+
+.discussion-cards {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.discussion-cards h3 {
+  margin: 0;
+  color: #0d3c61;
+  font-size: 1.08rem;
+  line-height: 1.2;
+}
+
+.discussion-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+
+.discussion-card {
+  min-height: 5rem;
+  border: 1px solid #cfe5cc;
+  border-radius: 8px;
+  background: #f8fff7;
+  padding: 0.72rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.58rem;
+}
+
+.discussion-card-number {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #14532d;
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.discussion-card p {
+  margin: 0;
+  color: #294b36;
+  font-weight: 800;
+  line-height: 1.45;
 }
 
 .mission-checklist {
@@ -1237,6 +1418,7 @@ body {
   }
 
   .mission-panel,
+  .classroom-guide,
   .mission-checklist,
   .character-stage,
   .wardrobe-panel,
@@ -1258,6 +1440,26 @@ body {
   .mission-title {
     font-size: 1.18rem;
     line-height: 1.35;
+  }
+
+  .classroom-guide-header,
+  .mission-checklist-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .classroom-guide-count,
+  .mission-checklist-count {
+    min-width: 100%;
+  }
+
+  .classroom-step {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .classroom-step-status {
+    grid-column: 2;
+    justify-self: start;
   }
 
   .character-area {
@@ -1299,5 +1501,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .character-layer {
     animation: none;
+  }
+
+  .classroom-progress-fill {
+    transition: none;
   }
 }

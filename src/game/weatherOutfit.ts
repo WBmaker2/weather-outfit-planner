@@ -11,6 +11,7 @@ export type WeatherMission = {
   description: string
   lessonRule: string
   teacherPrompt: string
+  discussionQuestions: string[]
   weatherIcon: string
   requiredItemIds: string[]
   unsuitableItemIds: string[]
@@ -58,6 +59,11 @@ export const missions: WeatherMission[] = [
     description: '젖지 않고, 찬 바람도 막을 준비가 필요해요.',
     lessonRule: '비 오는 날에는 발과 몸이 젖지 않도록 우산, 장화, 바람막이를 챙겨요.',
     teacherPrompt: '비와 바람이 함께 있으면 어떤 준비가 더 필요할까요?',
+    discussionQuestions: [
+      '우산과 장화는 각각 어떤 불편함을 막아줄까요?',
+      '바람이 부는 날 바람막이가 필요한 까닭을 말해볼까요?',
+      '비 오는 날 샌들을 신으면 어떤 일이 생길까요?',
+    ],
     weatherIcon: '🌧️',
     requiredItemIds: ['umbrella', 'rain-boots', 'windbreaker'],
     unsuitableItemIds: ['sandals', 'short-sleeve'],
@@ -68,6 +74,11 @@ export const missions: WeatherMission[] = [
     description: '시원하게 입고, 햇볕과 갈증을 조심해요.',
     lessonRule: '햇볕이 강한 날에는 모자로 눈을 보호하고 물병으로 수분을 챙겨요.',
     teacherPrompt: '더운 날 오래 밖에 있으면 우리 몸에 어떤 변화가 생길까요?',
+    discussionQuestions: [
+      '햇볕이 강한 날 모자는 우리 몸을 어떻게 도와줄까요?',
+      '물병을 챙기지 않으면 어떤 불편함이 생길까요?',
+      '더운 날 패딩과 목도리가 어울리지 않는 까닭은 무엇일까요?',
+    ],
     weatherIcon: '☀️',
     requiredItemIds: ['cap', 'short-sleeve', 'water-bottle'],
     unsuitableItemIds: ['padded-coat', 'scarf', 'gloves'],
@@ -78,6 +89,11 @@ export const missions: WeatherMission[] = [
     description: '몸을 따뜻하게 지키고, 손과 목도 챙겨요.',
     lessonRule: '눈 오고 추운 날에는 몸, 목, 손을 따뜻하게 감싸요.',
     teacherPrompt: '추운 날 우리 몸을 따뜻하게 지키는 방법을 말해볼까요?',
+    discussionQuestions: [
+      '추운 날 패딩은 몸을 어떻게 보호해줄까요?',
+      '목도리와 장갑 중 오늘 가장 먼저 챙기고 싶은 것은 무엇인가요?',
+      '눈 오는 날 반팔을 입으면 어떤 점이 불편할까요?',
+    ],
     weatherIcon: '❄️',
     requiredItemIds: ['padded-coat', 'scarf', 'gloves'],
     unsuitableItemIds: ['sandals', 'short-sleeve'],
@@ -88,6 +104,11 @@ export const missions: WeatherMission[] = [
     description: '얇은 겉옷과 마스크로 건강하게 나가요.',
     lessonRule: '봄바람과 먼지가 있는 날에는 얇은 겉옷과 마스크로 몸을 지켜요.',
     teacherPrompt: '먼지가 많은 날 숨쉬기와 옷차림은 어떻게 준비하면 좋을까요?',
+    discussionQuestions: [
+      '먼지가 많은 날 마스크는 왜 도움이 될까요?',
+      '봄바람이 불 때 얇은 겉옷을 챙기는 까닭은 무엇일까요?',
+      '패딩은 왜 오늘 날씨에는 너무 답답할 수 있을까요?',
+    ],
     weatherIcon: '🌬️',
     requiredItemIds: ['light-jacket', 'mask'],
     unsuitableItemIds: ['padded-coat'],
